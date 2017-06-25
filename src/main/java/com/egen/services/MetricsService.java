@@ -1,5 +1,7 @@
 package com.egen.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,13 @@ public class MetricsService {
 		System.out.println("Timestamp: "+metric.getTimeStamp());
 		System.out.println("value: "+metric.getValue());
 		metricDAO.createMetric(metric);
+	}
+
+	public List<Metric> getAllMetrics() {
+		// TODO Auto-generated method stub
+		
+		List<Metric> allMetrics = metricDAO.getAllMetrics();
+		
+		return allMetrics;
 	}
 }
