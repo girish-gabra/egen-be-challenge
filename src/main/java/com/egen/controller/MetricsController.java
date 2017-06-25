@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.egen.model.Metric;
@@ -38,5 +39,17 @@ public class MetricsController {
 		}
 		
 		return new ResponseEntity<List<Metric>>(allMetrics,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/readByTimeRange", method = RequestMethod.GET)
+	public ResponseEntity<List<Metric>> getMetricsByTimeRange(@RequestParam long fromTimeStamp, @RequestParam long toTimeStamp)
+	{
+		List<Metric> metrics = service.getMetricsByRange(fromTimeStamp, toTimeStamp);
+		// check if there are no records
+		if(metrics.isEmpty()){
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		
+		return new ResponseEntity<List<Metric>>(metrics,HttpStatus.OK);
 	}
 }

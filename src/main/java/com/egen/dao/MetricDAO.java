@@ -22,9 +22,18 @@ public class MetricDAO {
 
 	public List<Metric> getAllMetrics() {
 		// TODO Auto-generated method stub
-		Query<Metric> q = datastore.createQuery(Metric.class);
-		List<Metric> allMetrics = q.asList();
-		System.out.println(allMetrics.size());
+		Query<Metric> query = datastore.createQuery(Metric.class);
+		List<Metric> allMetrics = query.asList();
 		return allMetrics;
+	}
+	
+	public List<Metric> getMetricsByRange(long fromTimeStamp,long toTimeStamp) {
+		// TODO Auto-generated method stub
+		
+		Query<Metric> query = datastore.createQuery(Metric.class).field("timeStamp")
+				.greaterThanOrEq(fromTimeStamp)
+				.field("timeStamp").lessThanOrEq(toTimeStamp);
+		List<Metric> metrics = query.asList();
+		return metrics;
 	}
 }

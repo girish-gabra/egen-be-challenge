@@ -15,10 +15,7 @@ public class MetricsService {
 	private MetricDAO metricDAO;
 	
 	public void createMetric(Metric metric)
-	{
-		// do something
-		System.out.println("Timestamp: "+metric.getTimeStamp());
-		System.out.println("value: "+metric.getValue());
+	{	// save this metric by calling DAO method
 		metricDAO.createMetric(metric);
 	}
 
@@ -28,5 +25,12 @@ public class MetricsService {
 		List<Metric> allMetrics = metricDAO.getAllMetrics();
 		
 		return allMetrics;
+	}
+	
+	public List<Metric> getMetricsByRange(long fromTimeStamp,long toTimeStamp) {
+		// TODO Auto-generated method stub
+		
+		List<Metric> metrics = metricDAO.getMetricsByRange(fromTimeStamp,toTimeStamp);
+		return metrics;
 	}
 }

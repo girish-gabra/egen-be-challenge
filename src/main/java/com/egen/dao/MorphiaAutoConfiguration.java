@@ -24,21 +24,8 @@ public class MorphiaAutoConfiguration {
 	public Datastore datastore()
 	{
 		Morphia morphia = new Morphia();
-		morphia.map(Metric.class);
-		for (String str : mongoClient.listDatabaseNames())
-		{
-			System.out.println(str);
-		}
+		morphia.map(Metric.class);	// map Metric class to morphia
 		Datastore datastore = morphia.createDatastore(mongoClient, "egen");
-		/*Metric metric = new Metric();
-		metric.setTimeStamp("1498374");
-		metric.setValue(150);
-		datastore.save(metric);*/
-		//DBCollection collection =  datastore.getCollection(Metric.class);
-		//System.out.println(collection.getCount());
-		//Query<Metric> q = datastore.createQuery(Metric.class);
-		//List<Metric> qlist = q.asList();
-		//System.out.println(qlist.size());
 		return datastore;
 	}
 }
