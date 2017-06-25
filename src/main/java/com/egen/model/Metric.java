@@ -4,11 +4,11 @@ import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Property;
 
-@Entity(value="Metric")
+@Entity(value="metrics")
 public class Metric {
 	
 	@Id
-	String timeStamp;
+	long timeStamp;
 	@Property
 	int value;
 	
@@ -18,10 +18,10 @@ public class Metric {
 	public void setValue(int value) {
 		this.value = value;
 	}
-	public String getTimeStamp() {
+	public long getTimeStamp() {
 		return timeStamp;
 	}
-	public void setTimeStamp(String timeStamp) {
+	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 }
