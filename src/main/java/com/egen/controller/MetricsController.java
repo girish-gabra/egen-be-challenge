@@ -2,6 +2,8 @@ package com.egen.controller;
 
 import java.util.List;
 
+import org.easyrules.api.RulesEngine;
+import org.easyrules.core.RulesEngineBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import com.egen.services.MetricsService;
 @RestController
 @RequestMapping(value="/metrics")
 public class MetricsController {
+	
+	int baseWeight;
 	@Autowired
 	private MetricsService service;
 	@RequestMapping(value="/create", method = RequestMethod.POST)		
@@ -25,7 +29,22 @@ public class MetricsController {
 		
 		long timestamp = metric.getTimeStamp();
 		int value = metric.getValue();
+		
+		if(baseWeight==0){
+			baseWeight=value;
+		}
+		
 		service.createMetric(metric);
+		
+		// check for alerts
+		//Rules rules = new Rules();
+		OverWeightRule overWeightRule = new OverWeightRule(metric,baseWeight);
+		UnderWeightRule underWeightRule = new UnderWeightRule(metric,baseWeight);
+		RulesEngine alertRulesEngine = RulesEngineBuilder.aNewRulesEngine().build();
+		alertRulesEngine.registerRule(overWeightRule);
+		alertRulesEngine.registerRule(underWeightRule);
+		alertRulesEngine.fireRules();
+		
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 	
