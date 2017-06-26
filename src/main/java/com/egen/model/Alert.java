@@ -1,10 +1,11 @@
 package com.egen.model;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Property;
 
-@Entity
+@Entity(value="alerts")
 public class Alert {
 	@Id
 	long timeStamp;
@@ -30,4 +31,5 @@ public class Alert {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
 }

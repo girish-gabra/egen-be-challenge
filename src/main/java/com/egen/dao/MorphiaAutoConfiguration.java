@@ -1,6 +1,9 @@
 package com.egen.dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -26,10 +29,32 @@ public class MorphiaAutoConfiguration {
 	@Bean
 	public Datastore datastore()
 	{
-		Morphia morphia = new Morphia();
-		morphia.map(Metric.class);	// map Metric class to morphia
-		morphia.map(Alert.class);	// map Alert class to morphia
-		Datastore datastore = morphia.createDatastore(mongoClient, "egen");
+		Datastore datastore=null;
+		try 
+		{
+			Properties properties = new Properties();
+			String propFileName = "db.properties";
+			InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+			if(inputStream!=null){
+				
+					properties.load(inputStream);
+				
+			}
+			String DB_NAME = properties.getProperty("DB_NAME");
+			Morphia morphia = new Morphia();
+			morphia.map(Metric.class);	// map Metric class to morphia
+			morphia.map(Alert.class);	// map Alert class to morphia
+			datastore = morphia.createDatastore(mongoClient, DB_NAME);
+		} 
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		return datastore;
 	}
 }

@@ -22,7 +22,7 @@ public class AlertDAO {
 		datastore.save(alert);
 	}
 	
-	public List<Alert> getAllMetrics() {
+	public List<Alert> getAllAlerts() {
 		// TODO Auto-generated method stub
 		Query<Alert> query = datastore.createQuery(Alert.class);
 		List<Alert> allAlerts = query.asList();
